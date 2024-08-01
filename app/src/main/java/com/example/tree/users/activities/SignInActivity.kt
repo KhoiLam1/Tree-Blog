@@ -40,7 +40,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.tree.R
-import com.example.tree.admin.activities.AdminMainActivity
 
 val CustomGreen = Color(0xFF5A8659)
 
@@ -88,18 +87,6 @@ class SignInActivity : ComponentActivity() {
             db.collection("users").document(it).get().addOnSuccessListener { document ->
                 navigateToMainActivity()
             }
-                .addOnFailureListener {
-                    checkAdminAccess(uid)
-                }
-        }
-    }
-
-    private fun checkAdminAccess(uid: String) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("admins").document(uid).get().addOnSuccessListener { document ->
-                navigateToAdminMainActivity()
-        }.addOnFailureListener{
-            CustomToast.show(this, "Sign in failed: ${it.message}", ToastType.FAILURE)
         }
     }
 
@@ -115,11 +102,6 @@ class SignInActivity : ComponentActivity() {
 
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToAdminMainActivity() {
-        val intent = Intent(this, AdminMainActivity::class.java)
         startActivity(intent)
     }
 
