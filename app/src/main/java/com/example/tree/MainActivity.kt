@@ -14,7 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.TreeTheme
-import com.example.tree.tips.TipMainScreenFragmentContainer
+import com.example.tree.tips.TipMainScreenContainer
+import com.example.tree.ui.BottomNavigationBar
 import com.example.tree.ui.Screen
 import com.example.tree.users.activities.UserProfileScreenContainer
 import com.example.tree.utils.AuthHandler
@@ -62,12 +63,20 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainScreen() {
         val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = Screen.MainTip.route,
-        ) {
-            composable(Screen.MainTip.route) { TipMainScreenFragmentContainer() }
-            composable(Screen.Profile.route) { UserProfileScreenContainer() }
+        Scaffold(
+            bottomBar = {
+                BottomNavigationBar(navController)
+            }
+        ) { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = Screen.MainTip.route,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(Screen.MainTip.route) { TipMainScreenContainer() }
+//            composable(Screen.TipDetail.route + "/{tipId}") { TipMainScreenFragmentContainer() }
+                composable(Screen.Profile.route) { UserProfileScreenContainer() }
+            }
         }
     }
 

@@ -226,7 +226,7 @@ fun SortChip(
 }
 
 @Composable
-fun TipMainScreenFragmentContainer() {
+fun TipMainScreenContainer() {
     val viewModel: TipsViewModel = viewModel()
     val context = LocalContext.current
 
