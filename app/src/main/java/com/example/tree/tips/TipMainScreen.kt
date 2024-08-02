@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.tree.R
 import com.example.tree.tips.models.Tip
 import com.example.tree.tips.view_models.TipsViewModel
@@ -99,7 +100,6 @@ fun TipMainScreen(
     )
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CarouselItem(tip: Tip, onClick: (Tip) -> Unit) {
     Card(
@@ -109,7 +109,7 @@ fun CarouselItem(tip: Tip, onClick: (Tip) -> Unit) {
         onClick = { onClick(tip) }
     ) {
         Column {
-            GlideImage(
+            AsyncImage(
                 model = tip.imageList.firstOrNull(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
@@ -126,7 +126,6 @@ fun CarouselItem(tip: Tip, onClick: (Tip) -> Unit) {
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun TipItem(tip: Tip, onClick: (Tip) -> Unit) {
     Card(
@@ -136,7 +135,7 @@ fun TipItem(tip: Tip, onClick: (Tip) -> Unit) {
         Row(
             modifier = Modifier.padding(8.dp)
         ) {
-            GlideImage(
+            AsyncImage(
                 model = tip.imageList.firstOrNull(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,

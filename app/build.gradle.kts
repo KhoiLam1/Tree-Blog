@@ -94,8 +94,6 @@ dependencies {
     // Declare the dependencies for the Firebase Cloud Firestore and Analytics libraries
     implementation(libs.firebase.firestore)
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation(libs.glide)
-    kapt(libs.compiler) // Ensure you are using kapt for Glide
 
     // Activity KTX
     implementation(libs.androidx.activity.ktx)
@@ -120,7 +118,6 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation(libs.glide)
 
     // Coil for Jetpack Compose
     implementation("io.coil-kt:coil-compose:2.0.0")

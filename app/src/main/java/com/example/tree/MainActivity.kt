@@ -74,7 +74,6 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(Screen.MainTip.route) { TipMainScreenContainer() }
-//            composable(Screen.TipDetail.route + "/{tipId}") { TipMainScreenFragmentContainer() }
                 composable(Screen.Profile.route) { UserProfileScreenContainer() }
             }
         }
