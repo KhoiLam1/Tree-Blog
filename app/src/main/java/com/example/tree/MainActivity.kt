@@ -8,8 +8,15 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.compose.TreeTheme
+import com.example.tree.tips.TipMainScreenFragmentContainer
+import com.example.tree.ui.Screen
+import com.example.tree.users.activities.UserProfileScreenContainer
 import com.example.tree.utils.AuthHandler
 import com.example.tree.utils.PermissionManager
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -54,8 +61,13 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainScreen() {
-        Box(){
-            Text(text = "This is main screen")
+        val navController = rememberNavController()
+        NavHost(
+            navController = navController,
+            startDestination = Screen.MainTip.route,
+        ) {
+            composable(Screen.MainTip.route) { TipMainScreenFragmentContainer() }
+            composable(Screen.Profile.route) { UserProfileScreenContainer() }
         }
     }
 
