@@ -1,5 +1,6 @@
 package com.example.tree.tips
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -238,8 +239,14 @@ fun TipMainScreenContainer() {
     TipMainScreen(
         viewModel = viewModel,
         onProductTipClick = { tip ->
+            val intent = Intent(context, TipDetailActivity::class.java).apply {
+                putExtra("tipData", tip)
+            }
+            context.startActivity(intent)
         },
         onFabClick = {
+            val intent = Intent(context, WriteTipActivity::class.java)
+            context.startActivity(intent)
         }
     )
 }
