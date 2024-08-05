@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
 
         <activity
@@ -30,13 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".tips.TipDetailActivity" />
+        <activity android:name=".tips.WriteTipActivity" />
         <activity
             android:name=".users.activities.SignInActivity"
             android:exported="false" />
         <activity
             android:name=".users.activities.SignUpActivity"
             android:exported="false" />
-
+        <activity android:name=".admin.activities.AdminMainActivity"
+            android:exported="false"/>
     </application>
-
 </manifest>
