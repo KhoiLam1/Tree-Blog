@@ -22,7 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.tree.R
 import com.example.tree.users.factories.UserProfileViewModelFactory
 import com.example.tree.users.models.User
@@ -35,6 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun UserProfileScreen(
     viewModel: UserProfileViewModel,
@@ -43,10 +45,9 @@ fun UserProfileScreen(
 ) {
     val user by viewModel.user.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState(false)
-    val context = LocalContext.current
 
     if (isLoading) {
-        ProgressDialogUtils.showLoadingDialog(context)
+        ProgressDialogUtils.showLoadingDialog()
     } else {
         ProgressDialogUtils.hideLoadingDialog()
     }
@@ -77,7 +78,7 @@ fun UserProfileScreen(
                     ) {
                         val avatarModel = it.avatar
                         if (avatarModel.isNotEmpty()) {
-                            AsyncImage(
+                            GlideImage(
                                 model = avatarModel,
                                 contentDescription = "User Avatar",
                                 modifier = Modifier.size(100.dp),
@@ -250,6 +251,7 @@ fun UserProfileScreenContainer() {
             context.startActivity(Intent(context, SignInActivity::class.java))
         },
         onBecomeWriter = {
+            context.startActivity(Intent(context, RegisterToWriterActivity::class.java))
         }
     )
 }

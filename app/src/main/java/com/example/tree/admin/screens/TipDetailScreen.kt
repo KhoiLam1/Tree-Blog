@@ -37,13 +37,21 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.tree.ui.theme.errorLight
+import com.example.tree.ui.theme.onPrimaryContainerLight
+import com.example.tree.ui.theme.onSecondaryContainerLight
+import com.example.tree.ui.theme.primaryLight
+import com.example.tree.ui.theme.scrimLightMediumContrast
+import com.example.tree.ui.theme.secondaryLight
+import com.example.tree.ui.theme.theme_gray_addition
+import com.example.tree.ui.theme.theme_pending
+import com.example.tree.ui.theme.theme_tertiaryFixedDim_mediumContrast
 import com.example.tree.R
 import com.example.tree.admin.activities.MyTopAppBar
 import com.example.tree.tips.models.CheckContent
@@ -97,7 +105,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
                 Log.d(tag, "Loading image: $imageUrl")
             },
             placeholder = painterResource(id = R.drawable.sample_tip_pic),
-            contentDescription = "Tip image",
+            contentDescription = "First Image of Tip",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp),
@@ -124,7 +132,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo_app),
-                    contentDescription = "Illustration Icon",
+                    contentDescription ="This is icon for illustration" ,
                     modifier = Modifier
                         .size(58.dp)
                         .padding(end = 10.dp)
@@ -133,7 +141,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
                     Text(
                         text = checkContent?.response ?: "No response from AI",
                         fontSize = 14.sp,
-                        color = colorResource(id = R.color.md_theme_tertiaryFixedDim_mediumContrast)
+                        color = theme_tertiaryFixedDim_mediumContrast
                     )
                 }
             }
@@ -141,75 +149,75 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-            Column(
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                text = tip?.title ?: "Title",
+                color = scrimLightMediumContrast,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 7.dp)
+            )
+
+            Text(
+                text = tip?.shortDescription ?: "",
+                color = onPrimaryContainerLight,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(top = 12.dp),
+            )
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth()
+            )
+
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(top = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = tip?.title ?: "Title",
-                    color = colorResource(id = R.color.md_theme_scrim),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 7.dp)
-                )
-
-                Text(
-                    text = tip?.shortDescription ?: "",
-                    color = colorResource(id = R.color.md_theme_onSecondaryContainer),
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier
-                        .padding(vertical = 20.dp)
-                        .fillMaxWidth()
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.icon_dot),
-                            contentDescription = "Illustration Icon",
-                            modifier = Modifier
-                                .size(7.dp)
-                                .padding(end = 5.dp)
-                        )
-                        Text(
-                            text = state,
-                            color = colorResource(id = R.color.md_theme_pending),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = DateFormat.format("dd MMM yyyy", tip?.createdAt ?: Date()).toString(),
-                            color = colorResource(id = R.color.md_theme_gray_addition),
-                            fontSize = 12.sp
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.icon_dot),
-                            contentDescription = "Illustration Icon",
-                            modifier = Modifier
-                                .padding(horizontal = 5.dp)
-                                .size(4.dp)
-                        )
-                        Text(
-                            text = vote_counts.toString() + " upvotes",
-                            color = colorResource(id = R.color.md_theme_gray_addition),
-                            fontSize = 12.sp
-                        )
-                    }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_dot),
+                        contentDescription = "This is icon for illustration",
+                        modifier = Modifier
+                            .size(7.dp)
+                            .padding(end = 5.dp)
+                    )
+                    Text(
+                        text = state,
+                        color = theme_pending,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = DateFormat.format("dd MMM yyyy", tip?.createdAt ?: Date()).toString(),
+                        color = theme_gray_addition,
+                        fontSize = 12.sp
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_dot),
+                        contentDescription = "This is icon for illustration",
+                        modifier = Modifier
+                            .padding(horizontal = 5.dp)
+                            .size(4.dp)
+                    )
+                    Text(
+                        text = vote_counts.toString() + " upvotes",
+                        color = theme_gray_addition,
+                        fontSize = 12.sp
+                    )
+                }
+            }
 
             Row(
                 modifier = Modifier
@@ -230,13 +238,13 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
                 ) {
                     Text(
                         text = user.fullName ?: "",
-                        color = colorResource(id = R.color.md_theme_secondary),
+                        color = secondaryLight,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Blog Writer",
-                        color = colorResource(id = R.color.md_theme_secondary),
+                        text = "Plant writer",
+                        color = secondaryLight,
                         fontSize = 12.sp
                     )
                 }
@@ -244,7 +252,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
 
             Text(
                 text = tip?.content ?: "",
-                color = colorResource(id = R.color.md_theme_onSecondaryContainer),
+                color = onSecondaryContainerLight,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(top = 12.dp),
             )
@@ -264,7 +272,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
                 Button(
                     onClick = { rejectTip(navController, tipId, context) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.md_theme_error)
+                        containerColor = errorLight
                     )
                 ) {
                     Icon(
@@ -283,7 +291,7 @@ fun TipDetailScreen(tipId: String, navController: NavController) {
                 Button(
                     onClick = { approveTip(navController, tipId, context) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.md_theme_primary)
+                        containerColor = primaryLight
                     )
                 ) {
                     Icon(

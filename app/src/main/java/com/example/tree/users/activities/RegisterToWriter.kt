@@ -24,7 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.tree.R
 import com.example.tree.users.models.Writer
 import com.example.tree.users.repositories.WriterRepository
@@ -40,8 +41,8 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
-
 class RegisterToWriterActivity : ComponentActivity() {
     private val writerRepository = WriterRepository()
     private val storageReference = FirebaseStorage.getInstance().getReference("images/storeAvatars")
@@ -50,6 +51,15 @@ class RegisterToWriterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var avatarUrl by remember { mutableStateOf<String?>(null) }
+            var showToast by remember { mutableStateOf<Pair<String, ToastType>?>(null) }
+
+            // Handle toast messages in Compose
+            LaunchedEffect(showToast) {
+                showToast?.let { (message, type) ->
+                    CustomToast.show(this@RegisterToWriterActivity, message, type)
+                    showToast = null // Reset after showing
+                }
+            }
 
             RegisterToWriterScreen(
                 onImageSelected = { uri ->
@@ -61,7 +71,7 @@ class RegisterToWriterActivity : ComponentActivity() {
                     avatarUrl?.let { url ->
                         createNewWriter(url, pseudonym, email)
                     } ?: run {
-                        CustomToast.show(this, "Image not uploaded yet", ToastType.FAILURE)
+                        showToast = "Image not uploaded yet" to ToastType.FAILURE
                     }
                 }
             )
@@ -69,9 +79,9 @@ class RegisterToWriterActivity : ComponentActivity() {
     }
 
     private fun uploadImageToFirebase(fileUri: Uri, onUploadSuccess: (String) -> Unit) {
-        ProgressDialogUtils.showLoadingDialog(this)
+        ProgressDialogUtils.showLoadingDialog()
 
-        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val fileName = "${UUID.randomUUID()}.jpg"
         val fileRef = storageReference.child(fileName)
         val uploadTask = fileRef.putFile(fileUri)
 
@@ -86,8 +96,8 @@ class RegisterToWriterActivity : ComponentActivity() {
             ProgressDialogUtils.hideLoadingDialog()
             if (task.isSuccessful) {
                 val downloadUri = task.result.toString()
-                CustomToast.show(this, "Image uploaded successfully", ToastType.SUCCESS)
                 onUploadSuccess(downloadUri)
+                CustomToast.show(this, "Image uploaded successfully", ToastType.SUCCESS)
             } else {
                 CustomToast.show(this, "Failed to upload image", ToastType.FAILURE)
             }
@@ -111,7 +121,7 @@ class RegisterToWriterActivity : ComponentActivity() {
                 userRepository.updateToStore(userId, writer.id)
                 userRepository.updateAvatar(userId, avatarUrl)
 
-                runOnUiThread {
+                withContext(Dispatchers.Main) {
                     CustomToast.show(this@RegisterToWriterActivity, "Writer created successfully", ToastType.SUCCESS)
                     Firebase.auth.signOut()
                     val intent = Intent(this@RegisterToWriterActivity, SignInActivity::class.java)
@@ -119,7 +129,7 @@ class RegisterToWriterActivity : ComponentActivity() {
                     finish()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
+                withContext(Dispatchers.Main) {
                     CustomToast.show(this@RegisterToWriterActivity, "Failed to create writer: ${e.message}", ToastType.FAILURE)
                 }
             }
@@ -127,7 +137,7 @@ class RegisterToWriterActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun RegisterToWriterScreen(
     onImageSelected: (Uri) -> Unit,
@@ -168,7 +178,7 @@ fun RegisterToWriterScreen(
                 modifier = Modifier.size(100.dp)
             ) {
                 if (avatarUri != null) {
-                    AsyncImage(
+                    GlideImage(
                         model = avatarUri,
                         contentDescription = "Writer Avatar",
                         contentScale = ContentScale.Crop,

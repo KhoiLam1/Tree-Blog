@@ -118,7 +118,8 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
     // Coil for Jetpack Compose
     implementation("io.coil-kt:coil-compose:2.0.0")
     // Hilt dependencies

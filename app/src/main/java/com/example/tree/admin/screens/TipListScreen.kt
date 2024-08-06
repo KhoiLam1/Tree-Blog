@@ -30,6 +30,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -44,8 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.compose.errorContainerLight
-import com.example.compose.primaryContainerLight
+import com.example.tree.ui.theme.errorContainerLight
+import com.example.tree.ui.theme.primaryContainerLight
 import com.example.tree.R
 import com.example.tree.admin.activities.MyTopAppBar
 import com.example.tree.tips.models.Tip
@@ -81,7 +82,7 @@ fun TipList(navController: NavController, drawerState: DrawerState, scope: Corou
             addAll(itemList)
         }
     }
-    var tabState by remember { mutableStateOf(0) }
+    var tabState by remember { mutableIntStateOf(0) }
     Column {
         MyTopAppBar(navigationIcon = {
             IconButton(onClick = { scope.launch { drawerState.open() } }) {
