@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.tree.MainActivity
 import com.example.tree.R
@@ -39,6 +41,7 @@ import com.example.tree.tips.models.Author
 import com.example.tree.tips.models.Tip
 import com.example.tree.tips.view_models.CommentViewModel
 import com.example.tree.tips.view_models.TipsViewModel
+import com.example.tree.ui.theme.onPrimaryContainerLight
 import com.example.tree.users.activities.CustomGreen
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -328,6 +331,20 @@ fun TipDetailScreen(
 
             // Display Comments
             items(comments) { comment ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                ) {
+                    Image(
+                        painter = rememberImagePainter(data = comment.avatar),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .border(1.5.dp, onPrimaryContainerLight, CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
                 Column(modifier = Modifier.padding(vertical = 8.dp)) {
                     Text(text = comment.fullName, style = MaterialTheme.typography.bodyLarge)
                     Text(text = comment.content, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
@@ -335,7 +352,7 @@ fun TipDetailScreen(
             }
         }
     }
-}
+}}
 
 //@Preview(showBackground = true)
 //@Composable

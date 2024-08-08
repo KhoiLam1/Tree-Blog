@@ -69,7 +69,7 @@ class WriteTipActivity : ComponentActivity() {
             return
         }
 
-        val storageRef = storageInstance.reference.child("images/productTips/${imageUri.lastPathSegment}")
+        val storageRef = storageInstance.reference.child("images/Tips/${imageUri.lastPathSegment}")
         storageRef.putFile(imageUri)
             .addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
