@@ -106,13 +106,14 @@ dependencies {
     implementation(libs.retrofit)
 
     // Compose
-    implementation(libs.activity.compose)
+    implementation("androidx.activity:activity-compose:1.8.0")
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.material.icons.extended)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation(libs.constraintlayout.compose)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
@@ -131,5 +132,4 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     implementation("com.google.accompanist:accompanist-insets:0.21.1-beta")
-
 }

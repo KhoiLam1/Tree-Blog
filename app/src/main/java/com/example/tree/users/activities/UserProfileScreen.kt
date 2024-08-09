@@ -44,13 +44,6 @@ fun UserProfileScreen(
     onBecomeWriter: () -> Unit
 ) {
     val user by viewModel.user.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState(false)
-
-    if (isLoading) {
-        ProgressDialogUtils.showLoadingDialog()
-    } else {
-        ProgressDialogUtils.hideLoadingDialog()
-    }
 
     user?.let {
         val accountAgeDays = getAccountAgeDays(it.createdAt)

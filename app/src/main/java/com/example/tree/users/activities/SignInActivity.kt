@@ -37,7 +37,6 @@ import com.example.tree.utils.CustomToast
 import com.example.tree.utils.ToastType
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.tree.R
 
